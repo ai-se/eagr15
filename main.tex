@@ -1,6 +1,8 @@
 
 \documentclass[journal]{IEEEtran} 
 \usepackage{graphicx}
+\usepackage{balance}
+\usepackage{url}
 \newcommand{\bi}{\begin{itemize}}
 \newcommand{\ei}{\end{itemize}}
 \newcommand{\be}{\begin{enumerate}}
@@ -9,38 +11,285 @@
 \newcommand{\fig}[1]{Figure~\ref{fig:#1}}
 \newcommand{\eq}[1]{Equation~\ref{eq:#1}}    
 \begin{document} 
-\title{Peer Review  for ``Research Programming''}%
-\author{Tim Menzies% <-this % stops a space
-\thanks{T. Menzies is with Computer Science,
-North Carolina State University, North Carolina, USA, 27616 e-mail: tim.menzies@gmail.com).}% <-this % stops a space
-}%  
+\title{Meta Repositories: Why? How?}%
+\numberofauthors{2}
+\author{\alignauthor  Tim Menzies \\
+       \affaddr{CS, NState, USA}\\
+        tim.menzies@gmail.com
+\alignauthor Andrian Marcus\\
+       \affaddr{CS, UtDallas}\\
+        tim.menzies@gmail.com}
  
 \maketitle
- 
- {\em Show me a baked fish and I can eat for a night. Show me a fishing line, a map of rivers, a book on the spawning habits
- of fish, and I can eat forever.  
- 
- -- John Shavely}
- 
-
   
-   
- \section{Motivation}
+%{\em If I can't redo any of it- you faked it!}%
+%
+%-- James Noble
+%
+%~\\%
+%
+%{\em Don't share once, I forgive you. \\Don't share twice, I don't trust you.}
+%
+%-- Venkatesh-Prasad Ranganath%
+%
+%~\\
+%
+% {\em ...scientific and technical work is made invisible 
+% by its own success. When a machine runs  
+% efficiently, when a matter of fact is settled, one need focus 
+% only on its inputs and outputs and not on its internal 
+% complexity. Thus, paradoxically, the more science and 
+%% technology succeed, the more opaque 
+%and obscure they become.} -- Bruno Latour
+
+ 
+I propose PEPPER: a tool to connect multiple research-related repositories
+such that related work and  relevant researchers can quickly be determined such 
+that the  consumers of scientific results can access informed opinions
+about those results. 
+
+any joe can use this technology to judge impact
+
+talk to pc chairs on the following conferences to run on their data.
+
+ambitious: generality ... to research programming
+
+\[text + code + data\]
+
+reformulation
+
+PEPPER is motivated by Karl Popper who, in 1963, 
+argued that the scientific theories
+we should trust the most are those that have survived the most critical
+reviews~\cite{popper63}. In that view, the proper function of a scientific
+community
+is  not just to store things, or list things, but also
+to offer an informed critique of research products.  
+Using those critiques:
+\bi
+\item  Industry  decide what methods are mature enough to use in their products;
+\item Government agencies  set appropriate  funding priorities;
+\item  Researchers  select  the next steps in their research.
+\ei
+In the case of software analytics, it is becoming increasingly difficult
+to generate that informed critique. The range of algorithms and methods,
+and the diversity of subject areas means that it hard to find the right
+reviewers for new software analytics research.  Consider, for example, 
+the program committee meeting of any major software
+engineering conference. To assign reviewers, using tools
+like the Easychair.org conference manager, the current practice is to:
+\be
+\item
+Show the title and abstract to the program committee (PC), then let them bid on what they want to review. 
+\item
+These bids are then ``tweaked'' by the program chairs
+and some of Easychair's automatic load balancing algorithms.
+\ee
+PEPPER's goal is to improve on the above two points.
+Experience suggests that there is a growing need for such improvement.
+I have worked of dozens of PCs
+(both as a PC member and a PC chair). Based on the experience, I assert that many papers
+receive uninformed
+comments when PC members are often required
+to review areas far outside their domain of expertise.
+This introduces a very large variance in the final decisions of the PCs- as witnessed in the  recent  
+consistency experiment on the NIPS conference (the PC was split in two; all papers were reviewed by both committees; 57\% of the papers accepted by the first committee were rejected by the second one and vice versa\footnote{blog.mrtz.org/2014/12/15/the-nips-experiment.html}).
+
+PEPPER's goal is to use the tools of software analytics to improve how we review
+software analytics research. 
+Given  the remarkable progress  in the ten years of research, 
+there now exists:
+\be
+\item
+Tractability methods can find links between heterogeneous artifacts; e.g. requirements
+documents and code;
+\item
+Information retrieval tools can input  the text of issue reports and generate a tiny
+list of code sections that are most likely related to that issue;
+\item
+Discourse analysis to sense what opinions paper1 has about paper2;
+\item
+Further, this  all the above scale to very large coprura. Software analytics tools can  study the code and documentation and social networks
+of large numbers of developers, spread around the global.
+\ee
+Suppose instead of studying communities of developers, {\bf {\em we
+used software analytics to study communities of researchers}}.
+For example, consider what PEPPER could do  done with
+a set of Github repositories (one per research paper 
+on software analytics) containing:
+\bi
+\item
+The text of the research report;
+\item
+The scripts used to generate that report;
+\item
+The data used by the scripts. 
+\ei
+If we computed the links between all this material
+(across all the repositories relating to many research papers) then
+PEPEER could find connections and relevant reviewers for
+new research. I envisionage a future where tools like
+Easychair are augmented with PEPPER. When asked to make reviewer
+assignment, 
+if PEPPER  sees that the current committee's skill set is not sufficient
+to cover the submitted paper, then 
+PEPPER could suggest a minimum number of most useful additional people for the committee.
 
 
 
+\section{Approach}
+\subsection{Overview}
+PROMISE2020  uses information retrieval techniques developed in      with Gay, Haiduc and Marcus~\cite{me09k} on relevance feedback in IR-based concept
+location. It will  be tested in the context of software analytics.
+
+As  co-general chair of ICSME'16 and artifacts co-chair for FSE'16, I can suggest certain small changes to call for papers to the tools and data and demo and technical tracks of those two international conferences. Specifically, I would generate a set of  N repositories, each of which contains one submission including:
+\be
+\item The text (or pdf) of the  paper  
+\item Its supporting scripts;
+\item Any third-party tools; 
+\item Data used in the analysis.
+\ee
+To generate that corpus, 
+I would require that submissions to these tracks comprise a URL to a Github repository holding the above four points. 
+
+Once an author submits a url to one of those repositories, they PROMISE2020   automatically directs them  to other repositories that the system thinks   (a)~predates, (b)~related; (c)~extends, (d)~agrees, or (e)~conflicts with material in their  new submission.
+Using an on-line form,
+authors would then concur or dispute that determination which, in turn, would adjust the internal weights of the Rocchio formula~\cite{rocc71} that guides the matching between research repositories. These adjusted scores would then be used to guide future matchings between research repositories.
 
 
-Software is becoming  a ubiquitous tools
-to analyzing human problems. 
-Software and hardware tools
-are  better and faster and cheaper and   more people  are learning to use programs to make new decisions or audit old ones. 
-Phillip Goa~\cite{goa12} calls the use of software for 
-decision making ``research programming'' (see the
-examples of Figure~\ref{fig:eg1}).
-This changes the nature and goals of software engineering.
+
+\begin{figure}[!t]
+\begin{tabular}{|p{.95\linewidth}|}\hline
+\small
+\be
+\item {\em Motivational statements}  or reports or challenge statements or lists of open issues that prompt an analysis;
+\item  Any {\em data} used in an analysis (either {\em raw} from a project or some
+      {\em derived} product);
+\item Any {\em scripts} used to perform the analysis;
+\item {\em Checklists} used to design the analysis;
+\item {\em Bibliographies}, some of which might be annotated;
+\item {\em Hypotheses} about expected effects in some area;
+\item {\em Study instruments} such as surveys interview scripts, etc;
+\item {\em Statistical tests} used to analyze results;
+
+\item {\em Baseline results} against which new work can be compared;
+\item {\em Sampling procedures} e.g. ``how did you choose the projects you studied?'';
+\item {\em Patterns} describing  best practices for performing this kind of analysis;
+\item {\em Anti-patterns}  describing cautionary tales of ``gotchas'' to avoid when doing this kind of work;
+\item {\em Negative results} that are anti-patterns, backed up by empirical results;
+\item Executable {\em models} that can generate exemplar data;  or which offer an executable form of current hypotheses;
+\item {\em Tutorial materials} Guides to help  newcomers become proficient in the area. Some of these tutorial materials
+      may be generated by the researcher
+and others may be collected from other sources.
+\item {\em Text} of an author's papers;
+\item {\em New results}  that offer guidance on how to best handle future problems.
+\item {\em Future work} From the results, there many be speculations about open issues of
+      future issues that might become the {\em motivation} for the
+      next round of research.
+\ee
+\\\hline
+\end{tabular}
+\caption{
+Research artifacts associated with papers from MSR'14. Some of these products are executable software while the others are more like requirements statements of the what the software might do (e.g. the statements of {\em motivation} or {\em future work} ) 
+or the test cases that might be applied to the software (e.g. the input {\em data} and the  {\em statistical tests} used to assess the output or the 
+{\em anti-patterns} that could be used to guide code reviews of the scripts).
+Note that this list needs to be audited and/or extended via an analysis of a larger set of papers.}\label{fig:types}
+\end{figure} 
+
+\subsection{Internal Details}
+
+\subsubsection{Snowballing}
+To collect enough scores to adjust the weighting scheme, PROMISE2020 will use ``snowballing''. 
+Suppose  there is enough researcher feedback to significantly revise the matching weights.
+The researchers who generated the repositories whose weights have changed would then be notified so that they too can comment on the linkages inferred between the repositories.
+This process would ``snowball'' when the feed back from those researchers leads to further adjustments to the weightings, more notifications, and so on.
+
+\subsubsection{Finding Linkages}
+Internally, to find these linkages, PROMISE2020  would cluster features extracted from the repositories.  There are many methods for clustering in IR applications including
+the near linear-time methods developed recently with Marcus and Zimmermann~\cite{me12d}/
+
+
+To  obtain the feature vectors used in that clustering,  we would apply:
+\bi
+\item {\em Lightweight parsing tools} to report partial matches between the
+code bases of different research programmers.
+\item
+{\em Text mining tools} to:
+\bi
+\item Break apart PDF and Word documents, followed perhaps by synonym discovery tools;
+\item Isolate various ``research artifacts'' such as those listed in \fig{types};
+\item Sentiment analysis to infer if one paper endorses or  contradicts another~\cite{Pang08}.
+\ei
+\item
+{\em Social networks} techniques to find 
+author groups that often/rarely publish together.
+These sets of linked authors would be found
+\bi
+\item
+Via Google Scholar;
+\item 
+Via file names in the repositories to find authors that use the same third-party tools
+or data sets.
+\item
+Via names of functions that refer to standard algorithms (e.g. ``bayes'' or
+``NSGA-II'').
+\ei
+\ei
+
+
+
+the {\em many moods of international software analytics research community}.
+
+
+
+of an author on a
+All this suggests that:
+\bi
+\item If the tools of IR, tracability and software analytics
+are applied back onto the code of software analytics analysts...
+\item Then we would be able to infer connections between researchers exploring
+software analytics.
+\ei
+
+Meant
+I propose applying the tools of software analytics onto the code and text
+used by the software analytics analysts. 
+
+Is it time to combine information retreival methods with open science tools?
+\bInformation retrieval methods have matured to the point
+where it is now commonplace to input bug reports and output a tiny list
+showing where what code sections are implicated in that bug.
+}
+\section{}
+   The PROMISE repository of  data is one of the oldest, continually operating, web sites where researchers have ready access to data from many software projects. Since PROMISE's inception in 2005, many more such websites have come
+   online (e.g. see the list  in \tion{rw}).  Given the existence of multiple parallel efforts, it is proper to ask how to evolve the concept of ``data repository'' to better serve the needs
+   of society (as well as avoiding effort duplication).
+  
+  Data repositories
+become data sarcophagi when the contents are written but never read
+or kept and never critiqued. Popper argued that the   scientific theories
+we should trust the most are those that have survived the most critical
+reviews~\cite{popper63}. In that view, the proper function of a repository
+is not not just to store things, but to store ways to generate opinions
+about things. Accordingly, I propose PROMISE2020, a set of automatic tools
+designed for large scale use in 2020 with the specific purpose
+of encouraging {\bf an active and on-going debate about the implications 
+of the contents of a repository}. 
+
+PROMISE2020 would be designed to support debate over the results of ``research programming''.
+
+
+
+\section{Research Programming}
+Software is becoming  a ubiquitous tool
+for analyzing human problems.
+For example, in  Figure~\ref{fig:eg},
+Phillip Guo~\cite{guo12} lists many examples of ``research programming''; i.e. the use of software for 
+decision making.
+
+This trend towards software-based decision making could change the nature and social function of software engineering.
 In 1985, the introductory programming example was ``hello world''.  
-In 2025, that same example
+In 2035, that introductory example
 may well be be ``hello world model of climate change and economic
 impacts". 
 
@@ -50,241 +299,214 @@ The only way so many people can write so much software is that   our  tools and 
  
 But ever silver lining has a cloud. If so many people can use so much software to make decisions, then this means that more
 people can make more wrong conclusions, in less time, than
-ever before. Unless we can adapt existing methods of scientific peer review to research programming, then we face a generation of bad science and dangerous  policies founded on  poorly analyzed ill-conceived software models. For
+ever before. Unless we can adapt existing methods of scientific rigor   to research programming, then we face the danger of bad science and   policies founded on  poorly analyzed ill-conceived software. For
 example, consider:
-\bi
-\item Conclusions from software analytics that
-are incorrectly generalized beyond the context in thwich they were collected.
-\item
-The fault money market models that lead to the Global Economic Crisis of 2007--2008;
+\bi\item The mistakes found in Rienhart and Rogoff's spreadsheet that incorrectly assessed the
+effects of  government  austerity   vs stimulus measures; see  goo.gl/HGugL.  
 \item
 The CRATER  micrometeorite  model, which  incorrectly
-concluded that the Columbia  ice strike would not hurt that space shuttle. CRATER underestimated the damage since it was designed for  collisions of small and slow particles; i.e. \underline{{\bf not}} for  the 1200 cubic inch block travelling at over 400 mph that
-fatally damaged  the space shuttle. 
+concluded that the Columbia  ice strike would not hurt that space shuttle (see goo.gl/3cEfOv).
+\item Conclusions from software analytics that
+are incorrectly generalized to the wrong kinds of projects~\cite{shull02}.
 \ei
 
 
-\begin{figure}[!b]
+
+\begin{figure}[!t]
 \small
 \hrule
 
 \bi
 \item 
 {\em Science:} Scientists in fields ranging from bioinformatics to neuroscience use programs to analyze data sets and make  discoveries.
+For example, the 2013 Nobel Prize in Chemistry was won by Karplus et. al. for their development of ``multiscale methods for complex system'';
+i.e. software simulations for molecules at various scales, from single molecules to proteins; see goo.gl/LWensc.
 \item
-{\em Software Analytics:} Data science use data mining
+{\em Software Analytics:} Data science use data mining~\cite{me12d}
 as part of discussions with domain experts. Insights and anomalies gained from round $i$ of data mining are used to
-drive the next set of queries in round $i+1$.
+better focuse the next set of queries in round $i+1$.
 \item
-{\em Engineering:} Engineers perform experiments to tune systems by testing on data sets, adjusting their code, adjusting execution parameters, and graphing the resulting performance characteristics.
+{\em Engineering:} Engineers perform experiments to tune systems by testing on data sets, adjusting their code, adjusting execution parameters, and graphing the resulting performance characteristics The editted collection of Shaul Mordechai lists numerous applications of this type for domains as diverse as the design of optical tweezers, radiation theory, microbiological exposure assessment, remote sensing, silicon chips; see  goo.gl/qBMyIZ.
 \item
-{\em Business:} Web marketing analysts write programs to analyze clickstream data to decide how to improve sales and marketing strategies.
+{\em Business:} Web marketing analysts write programs to analyze clickstream data to decide how to improve sales and marketing strategies; see  goo.gl/b26CfY.
 \item
-{\em Finance:} Algorithmic traders write programs to prototype and simulate  trading strategies on finance data.
+{\em Finance:} Algorithmic traders write programs to prototype and simulate  trading strategies on finance data; see  www.quantopian.com.
 \item
-{\em Public policy:} Analysts write programs to mine U.S. Census and labor statistics data to predict the merits of proposed government policies.
+{\em Public policy:} Analysts write programs to mine U.S. Census and labor statistics data to predict the merits of proposed government policies; see goo.gl/X4kgnc.
 \item
-{\em Data-driven journalism: }Journalists write programs to analyze economic data and make information visualizations to publish alongside their news stories.
+{\em Data-driven journalism: }Journalists write programs to analyze economic data and make information visualizations to publish alongside their news stories; 
+see fivethirtyeight.com/
 \ei
 \hrule
-\caption{Examples of ``Research programming'';
-from~\cite{goa12}.}\label{fig:eg}
+\caption{Examples of ``Research programming''.
+Extended 
+from~\cite{guo12}.}\label{fig:eg}
 \end{figure}
-\subsection{Criteria for Matching}
-Wanh picj those? what centroids
-\subsection{Attempt tp gather artifacts}
-Boa, Remod, Promise, SIR. U. Watrerloo
 
-Not restrictired to one typio. homogenous
-
-\subsection{Communoicated is more than "Papae"}
-
-Support tp;;s/eemaropstest cases/
-
-\subsection{What erelvant worl}
-
-\section{What is the plan}?
-tracling evants
-
-that mucgh time afterwars
-
-wiring the match articachs. how to map.
-
-\section{Other}
-tecjmca; oties ovived
-artifact orieitend
-denila of motivation attacks
-
-denial of interest
-
-surveys. exampolke of other people's work.
-
-rq: define something small and goot enough to do (the are the artifacts vailable)
-
-not restuftured to one type.
+As a society,     we need  to (1)~ enable more access to mature  research programming results, while at the same
+time (2)~avoiding   misleading conclusions from immature research.
+Hence, I propose a socio-technical approach inspired by  Jim Herbsleb's
+keynote address at  ICSE'14.
+Herbsleb conjectured  that software defects increases when different  programmers, who use the same artifacts, do not communicate.  It is easy to
+see why this is so-- some tools are complex or nuanced and can only be used correctly after (1)~extended personnel experience or after (2)~contact with a community
+that understand that tool. Accordingly, PROMISE2020 aims to foster
+more interactions between research programmers who work on similar artifacts.
+To this end, I propose the following {\em cluster and review} process to ensure that the
+ most researchers people are reflecting on the most similar work.
 
 
-social compilers-- social engineering to generate the community to build
-extend and maintain the system. 
 
-the social wars
 
-%\IEEEpeerreviewmaketitle
-Humans out of the loop: humans out of the loop. four parts:
+\begin{figure*} 
+\begin{center}
+\footnotesize\begin{tabular}{lll} 
+type & name & url\\\hline
+d&Boa & http://boa.cs.iastate.edu\\
+d&Bug Prediction Dataset &http://bug.inf.usi.ch \\
+m&Clafier & http://t3-necsis.cs.uwaterloo.ca:8091/\\
+d&Eclipse Bug Data &http://goo.gl/tYKahN \\
+d&FLOSSMetrics& http://flossmetrics.org \\
+d&FLOSSMole &http://flossmole.org \\
+d&IBSBSG& http://www.isbsg.org \\
+d&ohloh& http://www.openhub.net \\
+d&PROMISE &http://promisedata.googlecode.com \\
+d&Qualitas Corpus &http://qualitascorpus.com \\
+d&ReMoDD: Repository for Model Driven Development &http://remodd.org/\\
+d&Software Artifact Repository &http://sir.unl.edu \\
+d&SourceForge Research Data &http://zerlot.cse.nd.edu \\
+d&Sourcerer Project &http://sourcerer.ics.uci.edu \\
+m& S.P.L.O.T.& https://github.com/marcilio/splot\\
+d&Tukutuku &http://www.metriq.biz/tukutuku \\
+d&Ultimate Debian Database &http://udd.debian.org\\ 
+\end{tabular}
+\end{center}
+\caption{Some repositories of software engineering data. Column one denotes repository type: ``m'' = model-centric; ``d''= data-centric.}\label{fig:sedata}
+\end{figure*}
+
+
+\section{Plan and Evalaution}
+\subsection{Milestones}
+The first milestone for PROMISE2020 is if we can generate any of the (a)  predates,  (b)  related;  (c)  extends,(d)  agrees,  or  (e)  conflicts links from a  corpus of research repositories.
+
+The second milestone would be a demonstrated capability of generating {\em all} these link
+types. Once that is operational, we can explore success measures.
+
+\subsection{Success Criteria}
+In the long term,
+if PROMISE2020  is a success,
+then in the future researchers might be ranked on their ``R-index''; i.e. the
+top ``R'' repositories from each researcher that  have at least ``R'' links (that are not ``conflicts'' links).
+
+In the medium term, PROMISE2020 would be a success if:
 \bi
-\item Planning
-\item Coding
+\item
+Government or academic review boards make extensive queries to PROMISE2020
+to find the relevant experts
+   who can critically audit new results.
+   \item
+   Similarly, 
+industrial practitioners make extensive queries to this tool to find
+  research results that are mature
+   enough for their industrial work (or, alternatively, what results need to be avoided at all costs). 
+   \ei
+In the short term, this proposal would be a success if (a)~many researchers review the links proposed between repositories and (b)~as a result of that review, the Rocchio weights are not constantly being revised (thus indicating that reviewers are agreeing with the conclusion
+of the system).
+
+
+
+\section{Who Would Use PROMISE2020?}
+
+The use of PROMISE2020 by industrial practitioners or government/academic review boards
+was mentioned above. Other users include: 
 \bi
-\item recommender system to fill in stuff
-\item natural code to fill in
-\ei
-\item Testing
-\bi
-\item open source told us large test community. issue is focusing them. gamification
-\item auto test repair . claire wes
-\item auto test oracles: ai for better partitioning, features section fo irreleancies.
-taken advanate of test case programs. 
-\ei
-\ei
+\item
+ Government or academic review boards could   find the relevant experts
+   who can critically audit new results.
+   \item
+Industrial practitioners could   find what research results are mature
+   enough for their industrial work (or, alternatively, what results need to be avoided at all costs). 
+   \ei
+Other users would include:
 
-pattern discovery from large corpuses. coding suggestion. lauguage design from AIs 
+     \bi
+    
+   \item
+   Members of the general community could question proposed policies by
+   checking the stability of the science behind the policy;
+  \item
+   A lone researcher could find related work that would assist them in their task;
+      \item
+   Research  team leaders could find tools, techniques and tutorials that can bootstrap their new team members into hyper-productive researchers;
+  \item
+   A teacher could quickly build their class materials via a rapid
+   survey of the state of the art in a particular field;
+   \item
+   A graduate research student could find ``holes'' in the field
+   where they might be able to make a contribution.
+   \ei
 
-s
-\bi
-\item language generator generator
-\item reinforcement learning. chunking mechansim SOAR to learn new language patterns/shortcuts
-\item explanation-based generation
-\ei
 
-collapses of the 20s and 30s and excess of big data big brother
-\bi
-\item military failures of city vs nomad economies
-\item larger systems collapse harder, harder to evolve and maintain
-\item lesson : local islands of order
-\ei
+ \section{Related Work}\label{sect:rw}
 
-large systems that have large logs
-\bi
-\item really long supply chains brittle . not longer and larger, but
-smaller and easier to maintain. monetize disruption. no more 787 .
-no more centralized electrical generation.
-but lots of cars
-\item feature selection
-\item instance selection
-\item destruction: the right people right tweaks
-\ei
+\subsection{Argument Webs}
 
-forced into smaller systems
-
-open source battlefield- suck the value of the idea. always providing value above and beyond
-the the. the android effects. other companies disrupt them. denial of motivation attacks. realized software are sociotechnological terrorism. ace developers have to become anonymous.
-
-mexico- want to not be prominent. extortion rackets 
-
-out sourcing: portable security enviornments
-
-micro division, micro tasks. not chief programmer, ibm ants.
-
-information, the more organized the item, the more energy 
-\bi
-\item the cleverer, the more organized, the more resources
-\item n highly organized systems the more complex the interfaces to other systems that evolve
-\item economics is the way we deal with entropy when 
-\ei
-
-scope much broader. intro example no longer hello world but hello worldClimateModel. e.g. loop pattern to loop invariant
-
-\section{End of Social}
-The story of the Zuckerburg/Gates weekend meeting of 2020 is now legendary.
-Challenged by Gates to do something to really change the world, published his
-famous
-Zuckerburg's howl of protest at the excess of effort being devoted to
-social media:
-\begin{quote}
-I saw the best minds of my generation destroyed by ad revenue madness, sipping hysterical Starbucks, dragging themselves through optimizations of click-thrus, looking for an Google buy-out. Angel-headed hackers (and their backers) burning for the ancient heavenly connection to the cloud-based dynamo in the machinery of the internet, trillions of shiny sparks on their misdirected screens.
-\end{quote}
-Vowing to better focus the intellectual efforts of the planet, 
-Zukerburg devoted a large portion of his considerable wealth to the BrightNet
-project where humans hide their identity  behind avatars and each avatar is
-scored ``up'' or ``down'' after each interaction with others. As the reputation of some avators grew, their ``good name'' became a tradeable commodity (the Gandhi avator recently sold for \$1B). Newbies declined to interact with ``down'' avators, choosing insteaed to only interact with folks who are know to play well with others. 
-
-\section{Collapse Predictors}
-
-Whitehead, msr15, possible to predict periods of steady growth
-as well as impending sudden change in software systems and
-ecosystems. Faced with impending collapse:
-\bi
-\item Venture capitalists withdraw funds;
-\item Programmers start relocating in droves;
-\ei
  
 
-\section{No more Big Data}
+The standard technique for designing on-line argument systems is some 
+   RDF-based system that formalizes some variant of Toulmin's argument structures
+   (e.g. the ArguBlog tool of Blex et al.~\cite{Bex20149}). Those tools use mostly
+   manaul constriction of their argument webs. PROMISE2020, on the other hand, combines
+   automatic clustering with human adjustments-- an approach that has the potential to generate a large web, much sooner.
+ 
+ 
+ 
 
-\subsection{The small data revolution}
-
-Peters (icse15) showed that micro sharing allows a community to share small (and somewhat obsficated) data, and predictions from the shared data are better than using all the unobfuscated data (why? cause fayola's obsficates via   averages over instance space so her 
-unobfuscated examples contain more information that raw data)
-
-\section{Auto coding}
-
-Prem's naturalness results means that if we can access large samples of code,
-then we will find many repeated patterns. Which means that if we starting coding some that we think is new, an whole host of recommendor  systems should soon   wake up to propose large additional code chunks and/or test suites. 
-
-Which changes the nature of programming. instead coding go to whoa, we now work on a "hint" basis, where given any problem, we start with the most unique aspect first. after which ai agents start proposing relevant additions or (if we deviate from usual practice) cautions when we leave the mainstream
-
-one side effect of this was to stem the tide of new languages. in 2015, there is a the MLOC rule: not new programming language can be generally used until there is at least 10 million LOC written in that code.  
-
-\subsection{The Great CPU Cooldown}
-
-{\em not sure on this one...}
-
-Ever since the melting of the Greenland icepack (with its associated disastrous impacts on the former European nations), there has been an increasing emphasis on sheppherding existing resources rather than assumption some exponentially increasing resource pool. Now new techniques are required to show that they consume fewer resources than prior innovations. 
+\subsection{Other Repositories}
+PROMISE2020 is very different to  other data and knowledge repository initiatives.
+For notes on those repositories, see below. 
 
 
 
-disasters like CRATER become more common (the micrometeorite model that said "columbia ice strike? no worries! even though that model was for far slower/smaller things that what hit columbia). program test suites summarized by data miners as "certification envelopes" that ship with a system reporting when that system is going outside the context where it was tested.
 
-context and locality results changed the nature of science. if everything local then no general models. however, there are cost effective ways of building local models. so it is not everyone civics duty to monitor old policies to see if we ahve moved to a zone where the old no longer applies.
+One class of repositories are {\em model-centric} repositories that hold
+executable high-level models that represent aspects of software systems .
+For example, 
+the SPLOT research website holds hundreds of feature maps of software products,
+Also,
+the Clafer website describes dozens of software systems in a home brew constraint language.
 
-\section{Group Think Fuck (must change this title)}
+Another class of repositories are  {\em data}-centric. These store the historical records
+of software projects-- see \fig{sedata}.
+Some of these have restricted access:
+e.g. access to Tukututu is restricted to just the research partners of its
+curator; 
+E.g. access to the ISBSG costs hundreds
+to thousands of dollars). 
 
-after the collapse of american public funding for research, the
-perverse effect of competition on researchers lead to a shell game where folks hide their stuff http://link.springer.com/article/10.1007/s11948-007-9042-5
-
-in response to this, academics evolvted challenge partners.
-sort of kinda promise$^2$
-
-end of papers, unapproachable diamonds written by acadamics devoted
-to enshrningin particular ideas
-
-more challenge problems generated by industry and lots of small tools dropping
-back from academ back to industy
-
-
-
-\section{Outsourcing to the next Billion}
-
-Early experiments, out-souricing. suck. then discoverred
-that our-sourced development more regular and  predictable (ye yang, msr 2013) so managers turned to out sourcing to reduce risk in
-software 
-
-\section{Intrinsic Dimensionality}
-
-As we studied more code, a repeated result is that much of that data is superflous, that the metrics we see in code are surface features, echoes of an underlying multi-dimensional structure. Much success in spectral methods for exploiting that underlying structure. Which means much of the old work on metrics simply faded away.
-
-\section{anomalies and locality}
+Also, sometimes the data-centric repositories only store special kinds of arfifacts:
+For example, ISBSG and Tukutuku store mostly 
+software development  effort data.  
+The BOA repository is heavily focused on the large scale mining of software source code. Hence, most
+of its tools relate to the traversal of abstract syntax trees.
+Also,
+The Software Artifact Repository stores code
+used for research exploring white box analysis of source code. 
 
 
-\section{Sentient AI}
+Most of the above repositories have two major limitations
+They hold artifacts  but not
+the debates inspired by that data\footnote{The exception here is Software Artifact Repository  that makes
+some attempt to track the papers that use its artifacts (but those papers are not indexed
+in the opinionated manner proposed for PROMISE20202)}.
+That is,
+they are all  focused on particular artifacts and not the supporting research artifacts list in~\fig{types}.
+This is significant lack since these artifacts are what is needed
+for (a)~newcomers to use that work or (b)~more experienced workers to critique and improve that work.
 
-All the SBSE stuff (e.g. claire degouse et al icse12 etc)
 
-Take the cloud to some place more energy full (floating nearer the sun) but less hospitable to humans. Software {\em herding} more
-than software {\em programming}. Turn lose a herd of AI algorithms
-that mutate known current solutions to generate multiple
-alternative candidate solutions.
 
+
+ 
 % needed in second column of first page if using \IEEEpubid
 %\IEEEpubidadjcol
 
@@ -371,14 +593,7 @@ alternative candidate solutions.
 % stfloats package.
 
 
-
-\section{Conclusion}
  
-\section*{Acknowledgment}
-
-
-The authors would like to thank...
-
 
 % Can use something like this to put references on a page
 % by themselves when using endfloat and the captionsoff option.
@@ -433,10 +648,61 @@ The authors would like to thank...
 % is flush with the other column.
 %\enlargethispage{-5in}
 
-
+\balance
+\bibliographystyle{plain}
 \bibliography{refs}
 
 % that's all folks
 \end{document}
 
 
+
+\section{Related Work}
+
+Not replication packages (since that is harder)
+
+Structured abstracts: even had reviewers tell us not do it.
+
+Structure literaeture reviews
+
+\clearpage
+\section{Begin crappy half-spelt ideas}
+
+\subsection{Criteria for Matching}
+Wanh picj those? what centroids
+\subsection{Attempt tp gather artifacts}
+Boa, Remod, Promise, SIR. U. Watrerloo
+
+Not restrictired to one typio. homogenous
+
+\subsection{Communoicated is more than "Papae"}
+
+Support tp;;s/eemaropstest cases/
+
+\subsection{What erelvant worl}
+
+\section{What is the plan}?
+tracling evants
+
+that mucgh time afterwars
+
+wiring the match articachs. how to map.
+
+\section{Other}
+tecjmca; oties ovived
+artifact orieitend
+denila of motivation attacks
+
+denial of interest
+
+surveys. exampolke of other people's work.
+
+rq: define something small and goot enough to do (the are the artifacts vailable)
+
+not restuftured to one type.
+
+
+social compilers-- social engineering to generate the community to build
+extend and maintain the system. 
+
+the social wars

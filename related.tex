@@ -1,0 +1,96 @@
+
+\section{Related Work}\label{sect:rw}
+
+\section{Argument Webs}
+
+The standard technique for designing argument systems is some formal logical
+approach based on RDF (e.g. the ArguBlog tool of Blex et al.~Bex20149
+
+\subsection{Lmopw;eege Bases}
+
+If constructed the wrong way, such a repository would be very difficult to build and maintain. For example, Lenat's CYC system required the manual construction of millions of axioms and grew so complex that it is hard to assess it it was successful or not\cite{lenta10,lenat91}.
+
+
+
+\subsection{Socio-Technical Systems}
+
+
+
+
+One authority on socio-technical ecosystems is Jim Herbsleb.
+In his keynote address at  ICSE'14, Herbsleb conjectured  that software defects increases when different  programmers, who use the same artifacts, do not communicate.  It is easy to
+see why this is so-- some tools are complex or nuanced and can only be used correctly after (1)~extended personnel experience or after (2)~contact with a community
+that understand that tool. Following from his work, my idea is to foster
+more interaction between research programmers, particular at the level
+of {\em research artifact}
+
+\subsection{Other Repositories}
+PROMISE2020 is very different to  other data and knowledge repository initiatives.
+For notes on those repositories, see below. 
+
+
+
+\begin{figure*} 
+\begin{center}
+\footnotesize\begin{tabular}{lll} 
+type & name & url\\\hline
+d&Boa & http://boa.cs.iastate.edu\\
+d&Bug Prediction Dataset &http://bug.inf.usi.ch \\
+m&Clafier & http://t3-necsis.cs.uwaterloo.ca:8091/\\
+d&Eclipse Bug Data &http://goo.gl/tYKahN \\
+d&FLOSSMetrics& http://flossmetrics.org \\
+d&FLOSSMole &http://flossmole.org \\
+d&IBSBSG& http://www.isbsg.org \\
+d&ohloh& http://www.openhub.net \\
+d&PROMISE &http://promisedata.googlecode.com \\
+d&Qualitas Corpus &http://qualitascorpus.com \\
+d&ReMoDD: Repository for Model Driven Development &http://remodd.org/\\
+d&Software Artifact Repository &http://sir.unl.edu \\
+d&SourceForge Research Data &http://zerlot.cse.nd.edu \\
+d&Sourcerer Project &http://sourcerer.ics.uci.edu \\
+m& S.P.L.O.T.& https://github.com/marcilio/splot\\
+d&Tukutuku &http://www.metriq.biz/tukutuku \\
+d&Ultimate Debian Database &http://udd.debian.org\\ 
+\end{tabular}
+\end{center}
+\caption{Some repositories of software engineering data. Column one denotes repository type: ``m'' = model-centric; ``d''= data-centric.}\label{fig:sedata}
+\end{figure*}
+
+
+One class of repositories are {\em model-centric} repositories that hold
+executable high-level models that represent aspects of software systems .
+For example, 
+the SPLOT research website holds hundreds of feature maps of software products,
+Also,
+the Clafer website describes dozens of software systems in a home brew constraint language.
+
+Another class of repositories are  {\em data}-centric. These store the historical records
+of software projects-- see \fig{sedata}.
+Some of these have restricted access:
+e.g. access to Tukututu is restricted to just the research partners of its
+curator; 
+E.g. access to the ISBSG costs hundreds
+to thousands of dollars). 
+
+Also, sometimes the data-centric repositories only store special kinds of arfifacts:
+For example, ISBSG and Tukutuku store mostly 
+software development  effort data.  
+The BOA repository is heavily focused on the large scale mining of software source code. Hence, most
+of its tools relate to the traversal of abstract syntax trees.
+Also,
+The Software Artifact Repository stores code
+used for research exploring white box analysis of source code. 
+
+
+Most of the above repositories have two major limitations
+They hold artifacts  but not
+the debates inspired by that data\footnote{The exception here is Software Artifact Repository  that makes
+some attempt to track the papers that use its artifacts (but those papers are not indexed
+in the opinionated manner proposed for PROMISE20202)}.
+That is,
+they are all  focused on particular artifacts and not the supporting research artifacts list in~\fig{types}.
+This is significant lack since these artifacts are what is needed
+for (a)~newcomers to use that work or (b)~more experienced workers to critique and improve that work.
+
+
+
